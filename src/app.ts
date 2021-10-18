@@ -1,52 +1,17 @@
-import express, { Request, Response, NextFunction } from "express";
+import express from "express"
+import { initModules, initServer } from "./helper/app.helper"
+import { getRouter } from "./router"
 
-const app = express();
-const port = 3000;
+const app = express()
+const port = 5000
 
-app.listen(port, () => {
-  console.log(`Timezones by location application is running on port ${port}.`);
-});
+app.set('port', port)
 
-interface LocationWithTimezone {
-  location: string;
-  timezoneName: string;
-  timezoneAbbr: string;
-  utcOffset: number;
-}
+const router = getRouter()
+app.use('/', router)
 
-const getLocationsWithTimezones = (
-  request: Request,
-  response: Response,
-  next: NextFunction
-) => {
-  let locations: LocationWithTimezone[] = [
-    {
-      location: "Germany",
-      timezoneName: "Central European Time",
-      timezoneAbbr: "CET",
-      utcOffset: 1,
-    },
-    {
-      location: "China",
-      timezoneName: "China Standard Time",
-      timezoneAbbr: "CST",
-      utcOffset: 8,
-    },
-    {
-      location: "Argentina",
-      timezoneName: "Argentina Time",
-      timezoneAbbr: "ART",
-      utcOffset: -3,
-    },
-    {
-      location: "Japan",
-      timezoneName: "Japan Standard Time",
-      timezoneAbbr: "JST",
-      utcOffset: 9,
-    },
-  ];
+initModules(app)
 
-  response.status(200).json(locations);
-};
+initServer(app, port)
 
-app.get("/timezones", getLocationsWithTimezones);
+export default app
