@@ -23,7 +23,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_PASS }}
 
       - name: Docker - build
-        run: docker build -t ${{ secrets.DOCKERHUB_NODE_TAG }}
+        run: docker build . -t ${{ secrets.DOCKERHUB_NODE_TAG }}
 
       - name: Docker - Push
         if: ${{ github.event_name != 'pull_request' }}
