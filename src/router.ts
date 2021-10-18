@@ -12,10 +12,7 @@ export const getRouter = (db?: ModelDatabase): Router => {
   const setupRoute = (route: Route) => {
     if (route.enabled) {
       LoggerTool.log(route.path)
-
-      // Выбор типа route (GET, POST, DELETE, PUT)
       switch (route.type) {
-        // GET route handler
         case RequestEnum.get:
           router.get(
             route.path,
